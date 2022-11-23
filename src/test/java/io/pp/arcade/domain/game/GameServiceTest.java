@@ -117,7 +117,7 @@ class GameServiceTest {
         Game game = gameRepository.save(Game.builder()
                 .slot(slot)
                 .status(StatusType.END)
-                .mode(Mode.NORMAL)
+                .mode(Mode.CHALLENGE)
                 .season(1) //season 추가
                 .build());
 

@@ -123,7 +123,7 @@ class UserControllerNormalTest {
                         .header("Authorization", "Bearer " + initiator.tokens[0].getAccessToken())) // "Authorization", "Bearer " + initiator.tokens[0].getAccessToken())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.event").value("match"))
-                .andExpect(jsonPath("$.currentMatchMode").value(Mode.NORMAL.getCode())) // enum 추가
+                .andExpect(jsonPath("$.currentMatchMode").value(Mode.CHALLENGE.getCode())) // enum 추가
                 .andDo(document("user-live-with-match"));
     }
 
@@ -131,7 +131,7 @@ class UserControllerNormalTest {
     CurrentMatch createCurrentMatch() {
         User user = initiator.users[0];
         Slot slot = initiator.slots[0];
-        slot.setMode(Mode.NORMAL);
+        slot.setMode(Mode.CHALLENGE);
         CurrentMatch currentMatch = CurrentMatch.builder()
                 .user(user)
                 .slot(slot)

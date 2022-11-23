@@ -89,7 +89,7 @@ class GameControllerNormalTest {
         for (int i = 0; i < GAMESIZE - 2; i++) {
             Mode mode = Mode.RANK;
             if (i % 2 == 0)
-                mode = Mode.NORMAL;
+                mode = Mode.CHALLENGE;
             slotList[i] = slotRepository.save(Slot.builder()
                     .time(LocalDateTime.now().plusHours(i))
                     .headCount(2)
@@ -871,7 +871,7 @@ class GameControllerNormalTest {
         LinkedMultiValueMap<String, String> params2 = new LinkedMultiValueMap<>();
         params2.add("gameId", "1234");
         params2.add("count", "20");
-        params2.add("mode", Mode.NORMAL.getCode());
+        params2.add("mode", Mode.CHALLENGE.getCode());
         params2.add("season", "1");
         mockMvc.perform(get("/pingpong/games/users/{intraId}","notfound").contentType(MediaType.APPLICATION_JSON)
                         .params(params2)
@@ -886,7 +886,7 @@ class GameControllerNormalTest {
         LinkedMultiValueMap<String, String> params3 = new LinkedMultiValueMap<>();
         params3.add("gameId", "1234");
         params3.add("count", "20");
-        params3.add("mode", Mode.NORMAL.getCode());
+        params3.add("mode", Mode.CHALLENGE.getCode());
         params3.add("season", "1");
         mockMvc.perform(get("/pingpong/games/users/{intraId}", users[10].getIntraId()).contentType(MediaType.APPLICATION_JSON)
                 .params(params3)
@@ -903,7 +903,7 @@ class GameControllerNormalTest {
         LinkedMultiValueMap<String, String> params4 = new LinkedMultiValueMap<>();
         params4.add("gameId", "12345");
         params4.add("count", "20");
-        params4.add("mode", Mode.NORMAL.getCode());
+        params4.add("mode", Mode.CHALLENGE.getCode());
         mockMvc.perform(get("/pingpong/games/users/{intraId}", users[0].getIntraId()).contentType(MediaType.APPLICATION_JSON)
                 .params(params4)
                 .header("Authorization", "Bearer " + initiator.tokens[0].getAccessToken()))

@@ -68,4 +68,7 @@ public class Slot extends BaseTimeEntity {
         this.team1 = team1;
         this.team2 = team2;
     }
+    public void updateHeadCount(int cnt) {
+        this.headCount += cnt;
+    }
 }

@@ -12,12 +12,14 @@ public class SlotAddUserRequestDto {
     @Positive
     private Integer slotId;
     private Mode mode;
+    private String opponent;
 
     @Override
     public String toString() {
         return "SlotAddUserRequestDto{" +
                 "slotId=" + slotId +
                 "mode=" + mode +
+                "opponent="+opponent+
                 '}';
     }
 }

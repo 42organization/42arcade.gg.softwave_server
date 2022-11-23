@@ -109,7 +109,7 @@ public class v1GameControllerTest {
             Integer currentExp = ExpLevelCalculator.getCurrentLevelMyExp(user.getTotalExp());
             Integer currentLevel = ExpLevelCalculator.getLevel(user.getTotalExp());
             body.put("slotId", slot.getId().toString());
-            body.put("mode", Mode.NORMAL.getCode());
+            body.put("mode", Mode.CHALLENGE.getCode());
 
             mockMvc.perform(post("/pingpong/match/tables/1/{type}", GameType.SINGLE.getCode()).contentType(MediaType.APPLICATION_JSON)
                             .content(objectMapper.writeValueAsString(body))

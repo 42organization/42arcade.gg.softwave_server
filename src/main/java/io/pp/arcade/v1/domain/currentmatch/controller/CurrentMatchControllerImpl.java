@@ -1,11 +1,11 @@
 package io.pp.arcade.v1.domain.currentmatch.controller;
 
 import io.pp.arcade.v1.domain.currentmatch.CurrentMatchService;
-import io.pp.arcade.v1.domain.currentmatch.dto.CurrentMatchDto;
-import io.pp.arcade.v1.domain.currentmatch.dto.CurrentMatchRemoveDto;
-import io.pp.arcade.v1.domain.currentmatch.dto.CurrentMatchResponseDto;
+import io.pp.arcade.v1.domain.slot.OpponentService;
+import io.pp.arcade.v1.domain.currentmatch.dto.*;
 import io.pp.arcade.v1.domain.game.dto.GameUserInfoDto;
 import io.pp.arcade.v1.domain.security.jwt.TokenService;
+import io.pp.arcade.v1.domain.slot.dto.OpponentResponseDto;
 import io.pp.arcade.v1.domain.slot.dto.SlotDto;
 import io.pp.arcade.v1.domain.team.TeamService;
 import io.pp.arcade.v1.domain.team.dto.TeamsUserListDto;
@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 @RestController
 @AllArgsConstructor
@@ -26,6 +27,7 @@ public class CurrentMatchControllerImpl implements CurrentMatchController {
     private final CurrentMatchService currentMatchService;
     private final TeamService teamService;
     private final TokenService tokenService;
+
 
     @Override
     @GetMapping(value = "/match/current")
@@ -88,4 +90,5 @@ public class CurrentMatchControllerImpl implements CurrentMatchController {
         }
         return teamUsers;
     }
+
 }

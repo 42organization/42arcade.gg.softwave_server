@@ -23,7 +23,7 @@ public class GameResponseManager {
 
     public GameResponseManager(GameNormalFactory gameNormalFactory, GameRankFactory gameRankFactory, SlotTeamUserService slotTeamUserService) {
         gameFactories = new HashMap<>();
-        this.gameFactories.put(Mode.NORMAL, gameNormalFactory);
+        this.gameFactories.put(Mode.CHALLENGE, gameNormalFactory);
         this.gameFactories.put(Mode.RANK, gameRankFactory);
         this.slotTeamUserService = slotTeamUserService;
     }

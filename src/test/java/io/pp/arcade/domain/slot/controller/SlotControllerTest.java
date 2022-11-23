@@ -178,7 +178,7 @@ class SlotControllerTest {
          * status : close
          * */
         Slot slot = slots[1];
-        saveSlot(slot, 2, GameType.SINGLE, 950, null, Mode.NORMAL);
+        saveSlot(slot, 2, GameType.SINGLE, 950, null, Mode.CHALLENGE);
         mockMvc.perform(get("/pingpong/match/tables/1/rank/{type}", GameType.SINGLE).contentType(MediaType.APPLICATION_JSON)
                         .header("Authorization", "Bearer 10"))
                 .andExpect(jsonPath("$.matchBoards[0][1].status").value(SlotStatusType.CLOSE.getCode()))

@@ -76,19 +76,40 @@ public class SlotService {
         */
     }
 
+//    @Transactional
+//    public void addUserInSlot(SlotAddUserDto addUserDto) {
+//        Slot slot = slotRepository.findById(addUserDto.getSlotId()).orElseThrow(() -> new BusinessException("E0001"));
+//        Integer headCountResult = slot.getHeadCount() + 1; // entity라 반영이 안되어서 미리 뺀 값을 써줘야함
+//        if (slot.getHeadCount() == 0) {
+//            slot.setType(addUserDto.getType());
+//            slot.setGamePpp(addUserDto.getJoinUserPpp());
+//        } else {
+//            slot.setGamePpp((addUserDto.getJoinUserPpp() + slot.getGamePpp() * slot.getHeadCount()) / headCountResult);
+//        }
+//        slot.setHeadCount(headCountResult);
+//        if (slot.getMode() == Mode.BOTH) {
+//            slot.setMode(addUserDto.getMode());
+//        }
+//    }
+
     @Transactional
     public void addUserInSlot(SlotAddUserDto addUserDto) {
         Slot slot = slotRepository.findById(addUserDto.getSlotId()).orElseThrow(() -> new BusinessException("E0001"));
-        Integer headCountResult = slot.getHeadCount() + 1; // entity라 반영이 안되어서 미리 뺀 값을 써줘야함
-        if (slot.getHeadCount() == 0) {
+        if (slot.getMode().getCode().equals("rank"))
+        {
+            if (slot.getHeadCount() == 0) {
+                slot.setType(addUserDto.getType());
+                slot.setGamePpp(addUserDto.getJoinUserPpp());
+            } else {
+                slot.setGamePpp((addUserDto.getJoinUserPpp() + slot.getGamePpp() * slot.getHeadCount()) / 2);
+            }
+            slot.updateHeadCount(slot.getHeadCount() + 1);
+        }
+        else // challenge
+        {
             slot.setType(addUserDto.getType());
             slot.setGamePpp(addUserDto.getJoinUserPpp());
-        } else {
-            slot.setGamePpp((addUserDto.getJoinUserPpp() + slot.getGamePpp() * slot.getHeadCount()) / headCountResult);
-        }
-        slot.setHeadCount(headCountResult);
-        if (slot.getMode() == Mode.BOTH) {
-            slot.setMode(addUserDto.getMode());
+            slot.updateHeadCount(slot.getHeadCount() + 2);
         }
     }
 

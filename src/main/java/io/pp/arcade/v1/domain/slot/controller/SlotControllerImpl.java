@@ -1,14 +1,12 @@
 package io.pp.arcade.v1.domain.slot.controller;
 
 import io.pp.arcade.v1.domain.currentmatch.CurrentMatchService;
-import io.pp.arcade.v1.domain.currentmatch.dto.CurrentMatchAddDto;
-import io.pp.arcade.v1.domain.currentmatch.dto.CurrentMatchDto;
-import io.pp.arcade.v1.domain.currentmatch.dto.CurrentMatchModifyDto;
-import io.pp.arcade.v1.domain.currentmatch.dto.CurrentMatchRemoveDto;
+import io.pp.arcade.v1.domain.currentmatch.dto.*;
 import io.pp.arcade.v1.domain.noti.dto.NotiCanceledTypeDto;
 import io.pp.arcade.v1.domain.season.SeasonService;
 import io.pp.arcade.v1.domain.season.dto.SeasonDto;
 import io.pp.arcade.v1.domain.security.jwt.TokenService;
+import io.pp.arcade.v1.domain.slot.OpponentService;
 import io.pp.arcade.v1.domain.slot.SlotService;
 
 import io.pp.arcade.v1.domain.team.TeamService;
@@ -36,6 +34,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 @RestController
@@ -50,6 +49,7 @@ public class SlotControllerImpl implements SlotController {
     private final TokenService tokenService;
     private final RedisTemplate redisTemplate;
     private final SlotGenerator slotGenerator;
+    private final OpponentService opponentService;
 
     @Override
     @GetMapping(value = "/match/tables/{tableId}/{mode}/{type}")
@@ -67,6 +67,15 @@ public class SlotControllerImpl implements SlotController {
         matchBoards = groupingSlots(slots);
         SlotStatusResponseDto responseDto = SlotStatusResponseDto.builder().matchBoards(matchBoards).intervalMinute(slotGenerator.getInterval()).build();
         return responseDto;
+    }
+
+    @GetMapping("/match/opponent")
+    public List<OpponentResponseDto> findOpponentList(HttpServletRequest request) {
+        List<OpponentResponseDto> responseDtoList = new ArrayList<>();
+        for (int i = 0; i < 3; ++i) {
+            responseDtoList.add(opponentService.findOne(createRandomId()));
+        }
+        return responseDtoList;
     }
 
     @Override
@@ -274,5 +283,11 @@ public class SlotControllerImpl implements SlotController {
         if (matchDto != null) {
             throw new BusinessException("SC002");
         }
+    }
+
+    private Integer createRandomId() {
+        Random random = new Random();
+        random.setSeed(System.currentTimeMillis());
+        return random.nextInt() % 12;
     }
 }

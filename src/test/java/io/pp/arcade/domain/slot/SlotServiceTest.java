@@ -14,7 +14,6 @@ import io.pp.arcade.v1.domain.user.UserRepository;
 import io.pp.arcade.v1.global.exception.BusinessException;
 import io.pp.arcade.v1.global.type.GameType;
 import io.pp.arcade.v1.global.type.SlotStatusType;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +24,10 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Locale;
 
+import static org.assertj.core.api.Assertions.*;
+
 @SpringBootTest
+@Transactional
 class SlotServiceTest {
 
     @Autowired
@@ -57,7 +59,6 @@ class SlotServiceTest {
     }
 
     @Test
-    @Transactional
     void addSlot() throws InterruptedException {
         //given
         LocalDateTime now = LocalDateTime.now();
@@ -69,13 +70,12 @@ class SlotServiceTest {
         Slot addedSlot = slotRepository.findByTime(time).orElseThrow();
 
         //then
-        Assertions.assertThat(dto.getTime()).isEqualTo(addedSlot.getTime());
-        Assertions.assertThat(dto.getTableId()).isEqualTo(addedSlot.getTableId());
-        Assertions.assertThat(addedSlot.getType()).isEqualTo(null);
+        assertThat(dto.getTime()).isEqualTo(addedSlot.getTime());
+        assertThat(dto.getTableId()).isEqualTo(addedSlot.getTableId());
+        assertThat(addedSlot.getType()).isEqualTo(null);
     }
 
     @Test
-    @Transactional
     void addUserInSlot() {
         //given
         slot = slots[0];
@@ -92,9 +92,9 @@ class SlotServiceTest {
         Slot s1 = slotRepository.findById(slot.getId()).orElseThrow(() -> new BusinessException("E0001"));
 
         //then
-        Assertions.assertThat(s1.getHeadCount()).isEqualTo(1);
-        Assertions.assertThat(s1.getGamePpp()).isEqualTo(user1.getPpp());
-        Assertions.assertThat(s1.getType()).isEqualTo(GameType.SINGLE);
+        assertThat(s1.getHeadCount()).isEqualTo(1);
+        assertThat(s1.getGamePpp()).isEqualTo(user1.getPpp());
+        assertThat(s1.getType()).isEqualTo(GameType.SINGLE);
 
         //given
         SlotAddUserDto dto1 = SlotAddUserDto.builder()
@@ -108,13 +108,12 @@ class SlotServiceTest {
         Slot s2 = slotRepository.findById(slot.getId()).orElseThrow(() -> new BusinessException("E0001"));
 
         //then
-        Assertions.assertThat(s2.getHeadCount()).isEqualTo(2);
-        Assertions.assertThat(s2.getGamePpp()).isEqualTo((user1.getPpp() + user2.getPpp()) / 2);
-        Assertions.assertThat(s2.getType()).isEqualTo(GameType.SINGLE);
+        assertThat(s2.getHeadCount()).isEqualTo(2);
+        assertThat(s2.getGamePpp()).isEqualTo((user1.getPpp() + user2.getPpp()) / 2);
+        assertThat(s2.getType()).isEqualTo(GameType.SINGLE);
     }
 
     @Test
-    @Transactional
     void removeUserInSlot() {
         // given
         Slot slot1 = slots[0];
@@ -130,33 +129,31 @@ class SlotServiceTest {
         Slot removedUserSlot = slotRepository.findById(slot1.getId()).orElseThrow(() -> new BusinessException("E0001"));
 
         // then
-        Assertions.assertThat(removedUserSlot.getGamePpp()).isEqualTo(100);
-        Assertions.assertThat(removedUserSlot.getHeadCount()).isEqualTo(1);
-        Assertions.assertThat(removedUserSlot.getType()).isEqualTo(GameType.SINGLE);
+        assertThat(removedUserSlot.getGamePpp()).isEqualTo(100);
+        assertThat(removedUserSlot.getHeadCount()).isEqualTo(1);
+        assertThat(removedUserSlot.getType()).isEqualTo(GameType.SINGLE);
 
         // when
         slotService.removeUserInSlot(dto);
         Slot removedUserSlot2 = slotRepository.findById(slot1.getId()).orElseThrow(() -> new BusinessException("E0001"));
 
         // then
-        Assertions.assertThat(removedUserSlot2.getGamePpp()).isEqualTo(null);
-        Assertions.assertThat(removedUserSlot2.getHeadCount()).isEqualTo(0);
-        Assertions.assertThat(removedUserSlot2.getType()).isEqualTo(null);
+        assertThat(removedUserSlot2.getGamePpp()).isEqualTo(null);
+        assertThat(removedUserSlot2.getHeadCount()).isEqualTo(0);
+        assertThat(removedUserSlot2.getType()).isEqualTo(null);
     }
 
     @Test
-    @Transactional
     void findSlotById() {
         //when
         slot = slots[0];
         SlotDto slotDto = slotService.findSlotById(slot.getId());
 
         //then
-        Assertions.assertThat(slotDto.getId()).isEqualTo(slot.getId());
+        assertThat(slotDto.getId()).isEqualTo(slot.getId());
     }
 
     @Test
-    @Transactional
     void findSlotsStatus() {
         //given
         slots[0].setType(GameType.DOUBLE);

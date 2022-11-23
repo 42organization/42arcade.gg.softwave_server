@@ -75,7 +75,7 @@ public class GameControllerImplV1 {
     public GameResultResponseDto gameNormalResult(@ModelAttribute @Valid GameResultPageRequestDto requestDto, HttpServletRequest request) {
         tokenService.findUserByAccessToken(HeaderUtil.getAccessToken(request));
 
-        GameFindDto gameFindDto = getGameFindDto(requestDto, Mode.NORMAL);
+        GameFindDto gameFindDto = getGameFindDto(requestDto, Mode.CHALLENGE);
         GameResultListDto resultPageDto = gameService.v1_findGamesAfterId(gameFindDto);
 
         List<GameResultDto> gameResultList = new ArrayList<>();

@@ -139,7 +139,7 @@ class   SlotControllerNormalTest {
         status : close
         */
         Slot slot = slots[1];
-        saveSlot(slot, 2, GameType.SINGLE, 950, (User) null, Mode.NORMAL);
+        saveSlot(slot, 2, GameType.SINGLE, 950, (User) null, Mode.CHALLENGE);
         mockMvc.perform(get("/pingpong/match/tables/1/normal/{type}", GameType.SINGLE.getCode()).contentType(MediaType.APPLICATION_JSON)
                         .header("Authorization", "Bearer " + testInitiator.tokens[10].getAccessToken()))
                 .andExpect(jsonPath("$.matchBoards[0][1].status").value(SlotStatusType.CLOSE.getCode()))
@@ -149,7 +149,7 @@ class   SlotControllerNormalTest {
         유저1(1000p) -> 접근할 수 없는 점수 차의 슬롯(ppp)이지만 일반전이라 open
         */
         slot = slots[2];
-        saveSlot(slot, 1, GameType.SINGLE, 900, (User) null, Mode.NORMAL);
+        saveSlot(slot, 1, GameType.SINGLE, 900, (User) null, Mode.CHALLENGE);
         saveUserPpp(users[10], 100);
         mockMvc.perform(get("/pingpong/match/tables/1/normal/{type}", GameType.SINGLE.getCode()).contentType(MediaType.APPLICATION_JSON)
                         .header("Authorization", "Bearer " + testInitiator.tokens[10].getAccessToken()))
@@ -181,7 +181,7 @@ class   SlotControllerNormalTest {
             passedSlot = slots[0];
             user = users[0];
             body.put("slotId", passedSlot.getId().toString());
-            body.put("mode", Mode.NORMAL.toString());
+            body.put("mode", Mode.CHALLENGE.toString());
 
             mockMvc.perform(get("/pingpong/match/tables/1/normal/{type}", GameType.SINGLE.getCode()).contentType(MediaType.APPLICATION_JSON)
                             .header("Authorization", "Bearer " + testInitiator.tokens[0].getAccessToken()))
@@ -297,7 +297,7 @@ class   SlotControllerNormalTest {
          * */
         body = new HashMap<>();
         body.put("slotId", "-1");
-        body.put("mode", Mode.NORMAL.getCode());
+        body.put("mode", Mode.CHALLENGE.getCode());
         mockMvc.perform(post("/pingpong/match/tables/1/{type}", GameType.SINGLE.getCode()).contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(body))
                         .header("Authorization", "Bearer " + testInitiator.tokens[2].getAccessToken()))
@@ -320,7 +320,7 @@ class   SlotControllerNormalTest {
          * */
         body = new HashMap<>();
         body.put("slotId", "String");
-        body.put("mode", Mode.NORMAL.getCode());
+        body.put("mode", Mode.CHALLENGE.getCode());
         mockMvc.perform(post("/pingpong/match/tables/1/{type}", GameType.SINGLE.getCode()).contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(body))
                         .header("Authorization", "Bearer " + testInitiator.tokens[2].getAccessToken()))
@@ -332,10 +332,10 @@ class   SlotControllerNormalTest {
          * -> 400
          * */
         slot = slots[0];
-        saveSlot(slot, 1, GameType.SINGLE, 1000, Mode.NORMAL);
+        saveSlot(slot, 1, GameType.SINGLE, 1000, Mode.CHALLENGE);
         saveUserPpp(users[0], 840);
         body.put("slotId", slot.getId().toString());
-        body.put("mode", Mode.NORMAL.getCode());
+        body.put("mode", Mode.CHALLENGE.getCode());
         mockMvc.perform(post("/pingpong/match/tables/1/{type}", GameType.SINGLE.getCode()).contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(body))
                         .header("Authorization", "Bearer " + testInitiator.tokens[0].getAccessToken()))
@@ -347,10 +347,10 @@ class   SlotControllerNormalTest {
          * -> 400
          * */
         slot = slots[1];
-        saveSlot(slot, 1, GameType.DOUBLE, 1000, Mode.NORMAL);
+        saveSlot(slot, 1, GameType.DOUBLE, 1000, Mode.CHALLENGE);
         body = new HashMap<>();
         body.put("slotId", slot.getId().toString());
-        body.put("mode", Mode.NORMAL.getCode());
+        body.put("mode", Mode.CHALLENGE.getCode());
         saveUserPpp(users[1], 1000);
         mockMvc.perform(post("/pingpong/match/tables/1/{type}", GameType.SINGLE.getCode()).contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(body))
@@ -363,7 +363,7 @@ class   SlotControllerNormalTest {
          * -> 400
          * */
         slot = slots[2];
-        saveSlot(slot, 2, GameType.SINGLE, 1000, Mode.NORMAL);
+        saveSlot(slot, 2, GameType.SINGLE, 1000, Mode.CHALLENGE);
         saveUserPpp(users[2], 1000);
         body = new HashMap<>();
         body.put("slotId", slot.getId().toString());
@@ -408,7 +408,7 @@ class   SlotControllerNormalTest {
             Slot slot = slots[1];
             User team1User = users[2];
             body.put("slotId", slot.getId().toString());
-            body.put("mode", Mode.NORMAL.getCode());
+            body.put("mode", Mode.CHALLENGE.getCode());
 
             /* slot - user1 등록 */
             mockMvc.perform(post("/pingpong/match/tables/1/{type}", GameType.SINGLE.getCode()).contentType(MediaType.APPLICATION_JSON)
@@ -577,7 +577,7 @@ class   SlotControllerNormalTest {
             Slot slot = slots[0];
             User team1User = users[0];
             body.put("slotId", slot.getId().toString());
-            body.put("mode", Mode.NORMAL.getCode());
+            body.put("mode", Mode.CHALLENGE.getCode());
 
             /* slot - user1 등록 */
             mockMvc.perform(post("/pingpong/match/tables/1/{type}", GameType.SINGLE.getCode()).contentType(MediaType.APPLICATION_JSON)
@@ -614,7 +614,7 @@ class   SlotControllerNormalTest {
             User team1User = users[7];
             User team2User = users[8];
             body.put("slotId", slot.getId().toString());
-            body.put("mode", Mode.NORMAL.getCode());
+            body.put("mode", Mode.CHALLENGE.getCode());
             /* slot - user1 등록 */
             mockMvc.perform(post("/pingpong/match/tables/1/{type}", GameType.SINGLE.getCode()).contentType(MediaType.APPLICATION_JSON)
                             .content(objectMapper.writeValueAsString(body))

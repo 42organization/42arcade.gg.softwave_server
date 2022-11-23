@@ -210,7 +210,7 @@ class CurrentMatchControllerImplTest {
         team2 = Team.builder().teamPpp(100).headCount(2).score(0).build();
         saveTeam(team1);
         saveTeam(team2);
-        slot = Slot.builder().tableId(1).headCount(4).time(LocalDateTime.now().plusDays(1)).mode(Mode.NORMAL).type(GameType.DOUBLE).build();
+        slot = Slot.builder().tableId(1).headCount(4).time(LocalDateTime.now().plusDays(1)).mode(Mode.CHALLENGE).type(GameType.DOUBLE).build();
         slot = saveSlot(slot);
         Game game = Game.builder().season(1).slot(slot).status(StatusType.LIVE).build();
         game = saveGame(game);

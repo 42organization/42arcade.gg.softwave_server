@@ -649,7 +649,7 @@ public class RealWorld {
                 .gamePpp(user.getPpp())
                 .headCount(1)
                 .type(GameType.SINGLE)
-                .mode(Mode.NORMAL)
+                .mode(Mode.CHALLENGE)
                 .build());
         Team userTeam = teamRepository.save(Team.builder()
                 .teamPpp(user.getPpp())
@@ -686,7 +686,7 @@ public class RealWorld {
                 .gamePpp((user1.getPpp() + user2.getPpp()) / 2)
                 .headCount(2)
                 .type(GameType.SINGLE)
-                .mode(Mode.NORMAL)
+                .mode(Mode.CHALLENGE)
                 .build());
         Team user1Team = teamRepository.save(Team.builder()
                 .teamPpp(user1.getPpp())
@@ -892,7 +892,7 @@ public class RealWorld {
                 .endTime(now.minusMonths(1).minusSeconds(1))
                 .startPpp(1000)
                 .pppGap(150)
-                .seasonMode(Mode.NORMAL)
+                .seasonMode(Mode.CHALLENGE)
                 .build());
         seasons[2] = seasonRepository.save(Season.builder()
                 .seasonName("시즌 3 혼합")
@@ -914,7 +914,7 @@ public class RealWorld {
                     .slot(slots[i])
                     .season(season.getId())
                     .status(StatusType.END)
-                    .mode(i % 2 == 0 ? Mode.RANK : Mode.NORMAL)
+                    .mode(i % 2 == 0 ? Mode.RANK : Mode.CHALLENGE)
                     .type(GameType.SINGLE)
                     .time(slots[i].getTime())
                     .build());
