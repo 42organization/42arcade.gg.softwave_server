@@ -22,7 +22,6 @@ public class GameDto {
     private LocalDateTime time;
     private Integer season;
     private StatusType status;
-
     private Mode mode;
 
     public static GameDto from(Game game) {

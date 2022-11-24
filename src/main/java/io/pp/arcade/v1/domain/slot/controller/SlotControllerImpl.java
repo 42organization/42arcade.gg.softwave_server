@@ -72,8 +72,11 @@ public class SlotControllerImpl implements SlotController {
     @GetMapping("/match/opponent")
     public List<OpponentResponseDto> findOpponentList(HttpServletRequest request) {
         List<OpponentResponseDto> responseDtoList = new ArrayList<>();
-        for (int i = 0; i < 3; ++i) {
-            responseDtoList.add(opponentService.findOne(createRandomId()));
+        String[] toIntraId = {"daekin", "donghyuk", "hakim", "him", "jabae", "jihyukim", "jiyun", "kipark", "nheo", "rjeong", "salee2", "wochae"};
+        while (responseDtoList.size() < 3) {
+            OpponentResponseDto opponent = opponentService.findByIntraId(toIntraId[createRandomNum()]);
+            if (opponent.getIsReady())
+                responseDtoList.add(opponent);
         }
         return responseDtoList;
     }
@@ -285,7 +288,7 @@ public class SlotControllerImpl implements SlotController {
         }
     }
 
-    private Integer createRandomId() {
+    private Integer createRandomNum() {
         Random random = new Random();
         random.setSeed(System.currentTimeMillis());
         return random.nextInt() % 12;

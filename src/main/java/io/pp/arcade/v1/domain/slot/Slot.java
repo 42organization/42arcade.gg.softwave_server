@@ -48,6 +48,11 @@ public class Slot extends BaseTimeEntity {
     @JoinColumn(name = "team2_id")
     private Team team2;
 
+
+    @OneToOne
+    @JoinColumn(name = "opponent_id")
+    private Opponent opponent;
+
     @Setter
     @Column(name = "type")
     private GameType type;

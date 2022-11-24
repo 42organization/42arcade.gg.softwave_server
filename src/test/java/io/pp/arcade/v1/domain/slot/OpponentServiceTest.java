@@ -21,7 +21,7 @@ class OpponentServiceTest {
     @Test
     void 유저가_조회된다() {
         //given
-        Opponent opponent1 = new Opponent("salee2", "sal", "http:google.com", "hihi");
+        Opponent opponent1 = new Opponent("salee2", "sal", "http:google.com", "hihi", true);
         //when
         OpponentResponseDto responseDto = opponentService.findOne(opponent1.getId());
 
