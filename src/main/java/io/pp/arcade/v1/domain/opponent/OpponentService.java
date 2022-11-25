@@ -1,5 +1,7 @@
-package io.pp.arcade.v1.domain.slot;
+package io.pp.arcade.v1.domain.opponent;
 
+import io.pp.arcade.v1.domain.opponent.Opponent;
+import io.pp.arcade.v1.domain.opponent.OpponentRepository;
 import io.pp.arcade.v1.domain.slot.dto.OpponentResponseDto;
 import io.pp.arcade.v1.global.exception.BusinessException;
 import lombok.RequiredArgsConstructor;
@@ -12,12 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class OpponentService {
 
     private final OpponentRepository opponentRepository;
-
-    @Transactional(readOnly = true)
-    public OpponentResponseDto findOne(Integer opponentId) {
-        Opponent opponent = opponentRepository.findById(opponentId).orElseThrow((() -> new BusinessException("E0001")));
-        return OpponentResponseDto.from(opponent);
-    }
 
     @Transactional(readOnly = true)
     public OpponentResponseDto findByIntraId(String intraId) {

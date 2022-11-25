@@ -1,4 +1,4 @@
-package io.pp.arcade.v1.domain.slot;
+package io.pp.arcade.v1.domain.opponent;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

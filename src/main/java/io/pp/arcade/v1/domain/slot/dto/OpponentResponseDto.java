@@ -1,6 +1,6 @@
 package io.pp.arcade.v1.domain.slot.dto;
 
-import io.pp.arcade.v1.domain.slot.Opponent;
+import io.pp.arcade.v1.domain.opponent.Opponent;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

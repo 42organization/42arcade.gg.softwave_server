@@ -6,7 +6,7 @@ import io.pp.arcade.v1.domain.noti.dto.NotiCanceledTypeDto;
 import io.pp.arcade.v1.domain.season.SeasonService;
 import io.pp.arcade.v1.domain.season.dto.SeasonDto;
 import io.pp.arcade.v1.domain.security.jwt.TokenService;
-import io.pp.arcade.v1.domain.slot.OpponentService;
+import io.pp.arcade.v1.domain.opponent.OpponentService;
 import io.pp.arcade.v1.domain.slot.SlotService;
 
 import io.pp.arcade.v1.domain.team.TeamService;
@@ -67,18 +67,6 @@ public class SlotControllerImpl implements SlotController {
         matchBoards = groupingSlots(slots);
         SlotStatusResponseDto responseDto = SlotStatusResponseDto.builder().matchBoards(matchBoards).intervalMinute(slotGenerator.getInterval()).build();
         return responseDto;
-    }
-
-    @GetMapping("/match/opponent")
-    public List<OpponentResponseDto> findOpponentList(HttpServletRequest request) {
-        List<OpponentResponseDto> responseDtoList = new ArrayList<>();
-        String[] toIntraId = {"daekin", "donghyuk", "hakim", "him", "jabae", "jihyukim", "jiyun", "kipark", "nheo", "rjeong", "salee2", "wochae"};
-        while (responseDtoList.size() < 3) {
-            OpponentResponseDto opponent = opponentService.findByIntraId(toIntraId[createRandomNum()]);
-            if (opponent.getIsReady())
-                responseDtoList.add(opponent);
-        }
-        return responseDtoList;
     }
 
     @Override
@@ -288,9 +276,4 @@ public class SlotControllerImpl implements SlotController {
         }
     }
 
-    private Integer createRandomNum() {
-        Random random = new Random();
-        random.setSeed(System.currentTimeMillis());
-        return random.nextInt() % 12;
-    }
 }

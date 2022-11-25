@@ -1,4 +1,4 @@
-package io.pp.arcade.v1.domain.slot;
+package io.pp.arcade.v1.domain.opponent;
 
 import io.pp.arcade.v1.domain.slot.dto.OpponentResponseDto;
 import org.junit.jupiter.api.Test;
@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @Transactional
 @SpringBootTest
@@ -23,7 +23,8 @@ class OpponentServiceTest {
         //given
         Opponent opponent1 = new Opponent("salee2", "sal", "http:google.com", "hihi", true);
         //when
-        OpponentResponseDto responseDto = opponentService.findOne(opponent1.getId());
+        opponentRepository.save(opponent1);
+        OpponentResponseDto responseDto = opponentService.findByIntraId(opponent1.getIntraId());
 
         //then
         assertThat(responseDto.getIntraId()).isEqualTo(opponent1.getIntraId());

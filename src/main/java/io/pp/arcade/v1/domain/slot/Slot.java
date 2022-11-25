@@ -1,5 +1,6 @@
 package io.pp.arcade.v1.domain.slot;
 
+import io.pp.arcade.v1.domain.opponent.Opponent;
 import io.pp.arcade.v1.domain.team.Team;
 import io.pp.arcade.v1.global.type.GameType;
 import io.pp.arcade.v1.global.type.Mode;

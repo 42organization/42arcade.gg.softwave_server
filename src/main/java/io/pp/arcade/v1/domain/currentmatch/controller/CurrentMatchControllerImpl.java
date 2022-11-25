@@ -1,11 +1,9 @@
 package io.pp.arcade.v1.domain.currentmatch.controller;
 
 import io.pp.arcade.v1.domain.currentmatch.CurrentMatchService;
-import io.pp.arcade.v1.domain.slot.OpponentService;
 import io.pp.arcade.v1.domain.currentmatch.dto.*;
 import io.pp.arcade.v1.domain.game.dto.GameUserInfoDto;
 import io.pp.arcade.v1.domain.security.jwt.TokenService;
-import io.pp.arcade.v1.domain.slot.dto.OpponentResponseDto;
 import io.pp.arcade.v1.domain.slot.dto.SlotDto;
 import io.pp.arcade.v1.domain.team.TeamService;
 import io.pp.arcade.v1.domain.team.dto.TeamsUserListDto;
@@ -18,7 +16,6 @@ import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 @RestController
 @AllArgsConstructor
