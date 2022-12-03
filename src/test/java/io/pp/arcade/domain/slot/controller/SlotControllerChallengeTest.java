@@ -25,6 +25,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -66,9 +67,10 @@ public class SlotControllerChallengeTest {
 
 
     @BeforeAll
+    @Transactional
     void init() {
         guestUsers = realWorld.getGuestUsers();
-        adminUsers = realWorld.getAdminUsers();
+        adminUsers = realWorld.getManagerUsers();
         opponents = new Opponent[10];
         for (int i = 0; i < 10; i++) {
             opponents[i] = opponentRepository.save(new Opponent(adminUsers[i].getIntraId(), "nick" + i, "", "hihi1", "hihi2", "hihi3", i % 3 != 0));
@@ -87,6 +89,7 @@ public class SlotControllerChallengeTest {
     @Nested
     class ChallengeModeSlotAddUser {
         @Test
+        @Transactional
         void 정상입장() throws Exception {
             //given
             Slot slot = realWorld.getEmptySlotMinutesLater(10);
@@ -130,6 +133,7 @@ public class SlotControllerChallengeTest {
         }
 
         @Test
+        @Transactional
         void 비정상입장() {
 
         }
@@ -139,6 +143,7 @@ public class SlotControllerChallengeTest {
     @Nested
     class ChallengeModeSlotRemoveUser {
         @Test
+        @Transactional
         void 정상퇴장() throws Exception {
             //given
             User guest = guestUsers[0];
@@ -165,6 +170,7 @@ public class SlotControllerChallengeTest {
         }
 
         @Test
+        @Transactional
         void 비정상퇴장() {
 
         }

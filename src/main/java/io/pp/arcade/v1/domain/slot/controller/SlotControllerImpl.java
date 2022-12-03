@@ -175,19 +175,19 @@ public class SlotControllerImpl implements SlotController {
 
     private void slotRemoveAdminUser(UserDto user, CurrentMatchDto currentMatch, SlotDto slot) throws MessagingException {
         List<SlotTeamUserDto> users = slotTeamUserService.findAllBySlotId(slot.getId());
-        UserDto adminUser = null;
+        UserDto managerUser = null;
         for (SlotTeamUserDto slotTeamUser : users) {
-            if (slotTeamUser.getUser().getRoleType() == RoleType.ADMIN) {
-                adminUser = slotTeamUser.getUser();
+            if (slotTeamUser.getUser().getRoleType() == RoleType.MANAGER) {
+                managerUser = slotTeamUser.getUser();
             }
         }
-        if (adminUser == null) {
+        if (managerUser == null) {
             return ;
         }
         teamService.removeUserInTeam(TeamRemoveUserDto.builder()
-                .slotId(slot.getId()).userId(adminUser.getId()).build());
-        slotService.removeUserInSlot(getSlotRemoveUserDto(slot, adminUser));
-        checkIsSlotMatched(adminUser, currentMatch, slot);
+                .slotId(slot.getId()).userId(managerUser.getId()).build());
+        slotService.removeUserInSlot(getSlotRemoveUserDto(slot, managerUser));
+        checkIsSlotMatched(managerUser, currentMatch, slot);
     }
 
 //    @Override
@@ -306,7 +306,7 @@ public class SlotControllerImpl implements SlotController {
                 .userMode(requestDto.getMode())
                 .pppGap(pppGap)
                 .build();
-        if (user.getRoleType() == RoleType.ADMIN) {
+        if (user.getRoleType() == RoleType.MANAGER) {
             return;
         }
         if (SlotStatusType.CLOSE.equals(slotService.getStatus(slotFilterDto))) {
@@ -342,7 +342,7 @@ public class SlotControllerImpl implements SlotController {
 
     private void checkIfUserHaveCurrentMatch(UserDto user) {
         CurrentMatchDto matchDto = currentMatchService.findCurrentMatchByUser(user);
-        if (user.getRoleType() != RoleType.ADMIN && matchDto != null) { // 일반 참여자가 현재 매치 중이면 예외처리, 하지만 어드민은 괜찮다.
+        if (user.getRoleType() != RoleType.MANAGER && matchDto != null) { // 일반 참여자가 현재 매치 중이면 예외처리, 하지만 어드민은 괜찮다.
             throw new BusinessException("SC002");
         }
     }

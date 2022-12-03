@@ -38,7 +38,7 @@ public class CurrentMatchService {
     @Transactional
     public void addCurrentMatch(CurrentMatchAddDto addDto){
         User user = userRepository.findById(addDto.getUser().getId()).orElseThrow(() -> new BusinessException("E0001"));
-        if (user.getRoleType() == RoleType.ADMIN) {
+        if (user.getRoleType() == RoleType.MANAGER) {
             return ;
         }
         Slot slot = slotRepository.findById(addDto.getSlot().getId()).orElseThrow(() -> new BusinessException("E0001"));

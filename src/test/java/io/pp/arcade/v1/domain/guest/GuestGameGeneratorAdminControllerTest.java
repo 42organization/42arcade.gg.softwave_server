@@ -14,7 +14,6 @@ import io.pp.arcade.v1.domain.season.SeasonRepository;
 import io.pp.arcade.v1.domain.security.jwt.Token;
 import io.pp.arcade.v1.domain.security.jwt.TokenRepository;
 import io.pp.arcade.v1.domain.slot.Slot;
-import io.pp.arcade.v1.domain.team.Team;
 import io.pp.arcade.v1.domain.user.User;
 import io.pp.arcade.v1.global.type.Mode;
 import io.pp.arcade.v1.global.type.StatusType;
@@ -30,8 +29,6 @@ import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -77,7 +74,7 @@ public class GuestGameGeneratorAdminControllerTest {
     @Transactional
     void 슬롯아이디_게임생성() throws Exception {
         User[] users = realWorld.getGuestUsers();
-        User[] admins = realWorld.getAdminUsers();
+        User[] admins = realWorld.getManagerUsers();
         Token adminToken = tokenRepository.findByUserId(admins[0].getId()).orElseThrow();
         Slot slot = realWorld.getRankedSlotWithTwoUsersMinutesLater(users[0], users[1], 1);
 

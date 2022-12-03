@@ -876,6 +876,24 @@ public class RealWorld {
         return users;
     }
 
+    public User[] getManagerUsers() {
+        User[] users = new User[10];
+        for (int i = 0; i < 10; i++) {
+            users[i] = userRepository.save(User.builder()
+                    .intraId("admin" + i)
+                    .eMail("admin" + i + "@42gg.kr")
+                    .imageUri(defaultUrl)
+                    .racketType(RacketType.values()[i % 2])
+                    .statusMessage("Hello, I'm admin " + i)
+                    .ppp(1000)
+                    .totalExp(100 * i)
+                    .roleType(RoleType.MANAGER)
+                    .build());
+            addRankByUser(users[i]);
+        }
+        return users;
+    }
+
     public User[] getAdminUsers() {
         User[] users = new User[10];
         for (int i = 0; i < 10; i++) {
